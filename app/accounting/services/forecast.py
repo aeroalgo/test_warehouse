@@ -8,7 +8,7 @@ from typing import *
 
 
 class ForecastModel(BaseModel):
-    """Класс данных для линейного графика"""
+    """Класс данных прогноза"""
     id: int
     article: str
     show_adding: bool
