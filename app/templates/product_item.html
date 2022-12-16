@@ -104,10 +104,11 @@
                                 </div>
                                 <div class="col-12 col-md-9">
                                     <select name="sku" id="sku" class="form-control">
-                                        <option value="1">1000001</option>
-                                        <option value="2">1000002</option>
-                                        <option value="3">1000003</option>
-                                        <option value="4">1000004</option>
+                                        {% for forecast in forecasts %}
+                                        {% if forecast.show_adding %}
+                                        <option value="{{ forecast.id }}">{{ forecast.article }}</option>
+                                        {% endif %}
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>
@@ -279,11 +280,13 @@
 
 
 
+
     </script>
     <script type="text/javascript">
         $(document).ready(function() {
           $('#bootstrap-data-table').DataTable();
       } );
+
 
 
 
