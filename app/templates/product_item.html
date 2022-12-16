@@ -106,7 +106,7 @@
                                     <select name="sku" id="sku" class="form-control">
                                         {% for forecast in forecasts %}
                                         {% if forecast.show_adding %}
-                                        <option value="{{ forecast.id }}">{{ forecast.article }}</option>
+                                        <option value="{{ forecast.id }}">{{ forecast.id }}</option>
                                         {% endif %}
                                         {% endfor %}
                                     </select>

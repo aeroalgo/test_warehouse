@@ -1,3 +1,4 @@
+from django.core.exceptions import BadRequest
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
@@ -8,9 +9,13 @@ from app.accounting.services.forecast import Forecast
 
 
 def sku(request):
+
     if request.method == "POST":
         sku_id = request.POST.get("sku")
-        sku = Product.objects.get(id=sku_id)
+        try:
+            sku = Product.objects.get(id=sku_id)
+        except:
+            raise BadRequest('Объект не найден')
         form = StorageForm(request.POST)
         if form.is_valid():
             obj = Storage.objects.filter(sku_id=sku.id).last()
@@ -18,7 +23,7 @@ def sku(request):
             new_obj.sku = sku
             new_obj.count = form.cleaned_data['count'] + obj.count
             new_obj.save()
-            return HttpResponseRedirect('/sku')
+            return HttpResponseRedirect('/')
 
     datas = Storage.objects.all().select_related("sku")
     data = CreateChartData(datas=datas)
