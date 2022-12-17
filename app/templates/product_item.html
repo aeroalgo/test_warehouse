@@ -93,7 +93,8 @@
                             </div>
                             <div class="card-body">
                                 <div class="alert alert-danger" role="alert">
-                                    {% set my_string = 'Закончатся на складе в ближайшие 12 часов: ' %}
+                                    Закончатся на складе в ближайшие 12 часов:
+                                    {% set my_string = ' ' %}
                                     {% for forecast in forecasts %}
                                     {% if forecast.show_adding %}
                                     {% set my_string = my_string ~ forecast.article ~ ' '%}
