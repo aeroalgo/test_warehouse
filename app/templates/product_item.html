@@ -84,40 +84,66 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-header">
-                        <strong>Добавить товар</strong>
-                    </div>
-                    <div class="card-body card-block">
-                        <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
-                            {{ csrf_input }}
-                            <div class="row form-group">
-                                <div class="col col-md-3"><label for="count" class=" form-control-label">Количество
-                                </label></div>
-                                <div class="col-12 col-md-9"><input type="number" id="count" name="count"
-                                                                    placeholder="Количество" class="form-control"></div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card-header">
+                                <strong class="card-title">Alerts</strong>
                             </div>
-                            <div class="row form-group">
-                                <div class="col col-md-3"><label for="sku" class=" form-control-label">Артикул
-                                </label>
-                                </div>
-                                <div class="col-12 col-md-9">
-                                    <select name="sku" id="sku" class="form-control">
-                                        {% for forecast in forecasts %}
-                                        {% if forecast.show_adding %}
-                                        <option value="{{ forecast.id }}">{{ forecast.article }}</option>
-                                        {% endif %}
-                                        {% endfor %}
-                                    </select>
+                            <div class="card-body">
+                                <div class="alert alert-danger" role="alert">
+                                    {% set my_string = 'Закончатся на складе в ближайшие 12 часов: ' %}
+                                    {% for forecast in forecasts %}
+                                    {% if forecast.show_adding %}
+                                    {% set my_string = my_string ~ forecast.article ~ ' '%}
+                                    {{ my_string }}
+                                    {% endif %}
+                                    {% endfor %}
                                 </div>
                             </div>
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-primary btn-sm">
-                                    <i class="fa fa-dot-circle-o"></i> Добавить
-                                </button>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card-header">
+                                <strong>Добавить товар</strong>
                             </div>
-                        </form>
+                            <div class="card-body card-block">
+                                <form action="#" method="post" enctype="multipart/form-data"
+                                      class="form-horizontal">
+                                    {{ csrf_input }}
+                                    <div class="row form-group">
+                                        <div class="col col-md-3"><label for="count"
+                                                                         class=" form-control-label">Количество
+                                        </label></div>
+                                        <div class="col-12 col-md-9"><input type="number" id="count"
+                                                                            name="count"
+                                                                            placeholder="Количество"
+                                                                            class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3"><label for="sku" class=" form-control-label">Артикул
+                                        </label>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <select name="sku" id="sku" class="form-control">
+                                                {% for forecast in forecasts %}
+                                                {% if forecast.show_adding %}
+                                                <option value="{{ forecast.id }}">{{ forecast.article }}
+                                                </option>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary btn-sm">
+                                            <i class="fa fa-dot-circle-o"></i> Добавить
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -281,11 +307,35 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     </script>
     <script type="text/javascript">
         $(document).ready(function() {
           $('#bootstrap-data-table').DataTable();
       } );
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
