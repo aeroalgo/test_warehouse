@@ -3,6 +3,7 @@ from curses.ascii import isdigit
 import numpy as np
 from datetime import timedelta, datetime
 
+from django.db.models import QuerySet
 from pydantic import BaseModel, Field
 from typing import *
 
@@ -17,13 +18,14 @@ class ForecastModel(BaseModel):
     end_date: datetime
     results: List[int]
 
+
 class Forecast:
 
-    def __init__(self, datas):
+    def __init__(self, datas: QuerySet):
         self.datas = datas
         self.sku_data = {}
 
-    def get_forecast(self):
+    def get_forecast(self) -> List[Dict[str, Any]]:
         for data in self.datas:
             if data.sku.article not in self.sku_data.keys():
                 self.sku_data[data.sku.article] = {

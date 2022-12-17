@@ -1,4 +1,7 @@
+from typing import *
 from datetime import datetime, timedelta
+from typing import Tuple, List, Optional, Dict, Any
+
 from django.db.models import QuerySet
 from app.accounting.services.forecast import Forecast
 from app.accounting.static_models import LineChart, BarChart
@@ -12,7 +15,7 @@ class CreateChartData:
         self.line_chart_datas = {}
         self.serialize_line_chart = []
 
-    def get_line_chart(self):
+    def get_line_chart(self) -> List[Dict]:
         for data in self.datas:
             if str(data.actual_date) not in self.labels:
                 self.labels.append(str(data.actual_date))
@@ -26,7 +29,7 @@ class CreateChartData:
         self.serialize_line_chart = [chart.dict() for chart in self.line_chart_datas.values()]
         return self.serialize_line_chart
 
-    def get_bar_chart(self):
+    def get_bar_chart(self) -> List[Dict]:
         bar_chart_serialize = []
         for key, chart_instance in self.line_chart_datas.items():
             bar_chart = BarChart(label=chart_instance.label, data=chart_instance.data)
@@ -35,9 +38,11 @@ class CreateChartData:
 
         return bar_chart_serialize
 
-    def get_forecast_chart(self, data, forecasts):
+    def get_forecast_chart(self,
+                           data: Dict[str, Any],
+                           forecasts: List[Dict[str, Any]]) -> Tuple[List, List[Optional[LineChart]]]:
         min_last_update = datetime.now()
-        max_end_date = forecasts[0].get("last_update")
+        max_end_date: datetime = forecasts[0].get("last_update")
 
         for forecast in forecasts:
             if forecast.get("last_update").timestamp() < min_last_update.timestamp():

@@ -30,6 +30,7 @@ def sku(request):
     line_chart = data.get_line_chart()
     bar_chart = data.get_bar_chart()
     instance = Forecast(datas=datas)
+
     forecasts = instance.get_forecast()
     forecast_labels, forecast_chart = data.get_forecast_chart(instance.sku_data, forecasts)
     labels = data.labels
